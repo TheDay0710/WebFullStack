@@ -29,9 +29,7 @@ namespace WEB.Controllers
 
             return View(products.ToList());
         }
-
-
-
+      
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -114,7 +112,7 @@ namespace WEB.Controllers
             }
             return View(product);
         }
-
+      
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
