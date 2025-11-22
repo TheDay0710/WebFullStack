@@ -1,0 +1,29 @@
+﻿@model WEB.OrderPro
+
+@{
+    ViewBag.Title = "ĐẶT HÀNG THÀNH CÔNG";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container text-center py-5" style="min-height: 500px;">
+    <div style="width: 80px; height: 80px; background: #006553; border-radius: 50%; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-check" style="color: #fff; font-size: 40px;"></i>
+    </div>
+
+    <h1 style="font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;">CẢM ƠN BẠN ĐÃ ĐẶT HÀNG!</h1>
+
+    <p class="text-muted mt-3">Đơn hàng của bạn đã được tiếp nhận và đang chờ xử lý.</p>
+
+    @if (Model != null)
+    {
+        <div class="mt-4 p-4" style="border: 1px solid #000; max-width: 500px; margin: 0 auto; text-align: left;">
+            <p class="mb-2"><strong>MÃ ĐƠN HÀNG:</strong> #@Model.ID</p>
+            <p class="mb-2"><strong>NGÀY ĐẶT:</strong> @(Model.DateOrder.HasValue ? Model.DateOrder.Value.ToString("dd/MM/yyyy HH:mm") : "")</p>
+            <p class="mb-0"><strong>ĐỊA CHỈ:</strong> @Model.AddressDeliverry</p>
+        </div>
+    }
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-dark mt-5" style="border-radius: 0; padding: 15px 40px; font-weight: bold; font-family: 'Oswald', sans-serif; letter-spacing: 1px; text-decoration:none;">
+        TIẾP TỤC MUA SẮM <i class="fas fa-arrow-right ms-2"></i>
+    </a>
+</div>

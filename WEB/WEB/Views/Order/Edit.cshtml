@@ -1,0 +1,89 @@
+﻿@model WEB.OrderPro
+
+@{
+    ViewBag.Title = "CẬP NHẬT ĐƠN HÀNG";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .adidas-input {
+        border: 1px solid #767677;
+        border-radius: 0;
+        padding: 12px;
+        font-weight: bold;
+    }
+
+        .adidas-input:focus {
+            border-color: #000;
+            box-shadow: none;
+            outline: 2px solid #000;
+        }
+
+    .btn-adidas-black {
+        background-color: #000;
+        color: #fff;
+        padding: 15px 40px;
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+        .btn-adidas-black:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-adidas-black:after {
+            content: '→';
+            margin-left: 10px;
+        }
+
+    .link-cancel {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        text-decoration: underline;
+        color: #000;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="font-adidas text-center mb-5" style="font-size: 32px;">CẬP NHẬT ĐƠN HÀNG #@Model.ID</h2>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="mb-4">
+                    <label class="fw-bold mb-2 text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Khách hàng</label>
+                    @Html.DropDownList("IDCus", null, htmlAttributes: new { @class = "form-control adidas-input" })
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-bold mb-2 text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Ngày đặt</label>
+                    @Html.EditorFor(model => model.DateOrder, new { htmlAttributes = new { @class = "form-control adidas-input" } })
+                </div>
+
+                <div class="mb-5">
+                    <label class="fw-bold mb-2 text-uppercase" style="font-size: 12px; letter-spacing: 1px;">Địa chỉ giao hàng</label>
+                    @Html.EditorFor(model => model.AddressDeliverry, new { htmlAttributes = new { @class = "form-control adidas-input" } })
+                </div>
+
+                <button type="submit" class="btn-adidas-black">LƯU THAY ĐỔI</button>
+                <a href="@Url.Action("Index")" class="link-cancel">HỦY BỎ</a>
+            }
+        </div>
+    </div>
+</div>

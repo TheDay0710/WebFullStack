@@ -1,0 +1,202 @@
+﻿@model WEB.OrderPro
+
+@{
+    ViewBag.Title = "THANH TOÁN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var cartList = ViewBag.Cart as List<WEB.Product>;
+    double total = ViewBag.Total != null ? (double)ViewBag.Total : 0;
+}
+
+<style>
+
+    .checkout-title {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 28px;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+    }
+
+    .adidas-input {
+        border: 1px solid #767677;
+        border-radius: 0;
+        padding: 12px 15px;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 20px;
+        transition: 0.2s;
+    }
+
+        .adidas-input:focus {
+            border-color: #000;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        }
+
+    .btn-place-order {
+        background-color: #000;
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+        .btn-place-order:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+    .order-summary-box {
+        border: 1px solid #e2e2e2;
+        padding: 30px;
+        background-color: #fff;
+    }
+
+    .summary-item {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+
+    .summary-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 1px solid #f0f0f0;
+    }
+
+    .summary-info h6 {
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-7 pe-lg-5">
+            <h2 class="checkout-title">THÔNG TIN GIAO HÀNG</h2>
+
+            @using (Html.BeginForm("ProcessOrder", "Payment", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Họ và tên *</label>
+                    <input type="text" name="NameCus" class="adidas-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Số điện thoại *</label>
+                            <input type="text" name="PhoneCus" class="adidas-input" placeholder="0909 xxx xxx" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Email</label>
+                            <input type="email" name="EmailCus" class="adidas-input" placeholder="email@example.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Địa chỉ nhận hàng *</label>
+                    @Html.EditorFor(model => model.AddressDeliverry, new { htmlAttributes = new { @class = "adidas-input", @placeholder = "Số nhà, Tên đường, Phường/Xã...", @required = "required" } })
+                </div>
+
+                <div class="mt-4">
+                    <h4 class="checkout-title" style="font-size: 20px;">PHƯƠNG THỨC THANH TOÁN</h4>
+                    <div class="border p-3 mb-2 d-flex align-items-center" style="border: 1px solid #000 !important;">
+                        <input type="radio" name="PaymentMethod" checked class="me-3" style="width:20px; height:20px; accent-color: black;">
+                        <span class="fw-bold">THANH TOÁN KHI NHẬN HÀNG (COD)</span>
+                    </div>
+                    <div class="border p-3 d-flex align-items-center text-muted">
+                        <input type="radio" name="PaymentMethod" disabled class="me-3" style="width:20px; height:20px;">
+                        <span>Thẻ tín dụng / Ghi nợ (Đang bảo trì)</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-place-order">
+                    ĐẶT HÀNG NGAY <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <p class="mt-3 text-muted" style="font-size: 12px;">
+                    Bằng việc đặt hàng, bạn đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Adidas.
+                </p>
+            }
+        </div>
+
+        <div class="col-lg-5 mt-5 mt-lg-0">
+            <div class="order-summary-box">
+                <h3 class="checkout-title" style="font-size: 22px;">TÓM TẮT ĐƠN HÀNG</h3>
+
+                <div class="d-flex justify-content-between mb-3 fw-bold">
+                    <span>SẢN PHẨM (@(cartList != null ? cartList.Count : 0))</span>
+                    <a href="#" class="text-decoration-underline text-dark" style="font-size:12px">CHỈNH SỬA</a>
+                </div>
+
+                @if (cartList != null)
+                {
+                    foreach (var item in cartList)
+                    {
+                        <div class="summary-item">
+                            <img src="~/Content/images/@item.ImagePro" class="summary-img" alt="Product">
+                            <div class="summary-info w-100">
+                                <h6>@item.NamePro</h6>
+                                <p class="mb-0 text-muted" style="font-size: 13px;">Màu: Đen / Size: 42</p>
+                                <p class="fw-bold mt-1">@string.Format("{0:N0} ₫", item.Price)</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <hr>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Giá trị đơn hàng</span>
+                    <span>@string.Format("{0:N0} ₫", total)</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Phí vận chuyển</span>
+                    <span>MIỄN PHÍ</span>
+                </div>
+
+                <hr style="border-top: 2px solid #000;">
+
+                <div class="total-row">
+                    <span>TỔNG CỘNG</span>
+                    <span>@string.Format("{0:N0} ₫", total)</span>
+                </div>
+                <div class="text-end text-muted" style="font-size: 12px;">(Đã bao gồm thuế VAT)</div>
+            </div>
+        </div>
+    </div>
+</div>

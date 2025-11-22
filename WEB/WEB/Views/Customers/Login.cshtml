@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "ĐĂNG NHẬP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .adidas-form-container {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 40px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+    }
+
+    .adidas-title {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 30px;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+    }
+
+    .adidas-label {
+        font-weight: bold;
+        font-size: 13px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: block;
+        letter-spacing: 0.5px;
+    }
+
+    .adidas-input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #767677;
+        border-radius: 0;
+        margin-bottom: 20px;
+        font-size: 16px;
+        outline: none;
+    }
+
+        .adidas-input:focus {
+            border-color: #000;
+            box-shadow: 0 0 0 1px #000 inset;
+        }
+
+    /* Nút Đăng nhập */
+    .btn-adidas-submit {
+        background-color: #000;
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: 2px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+        .btn-adidas-submit:hover {
+            background-color: #333;
+        }
+
+    .register-box {
+        margin-top: 30px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+
+    .btn-outline-adidas {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+        .btn-outline-adidas:hover {
+            background: #000;
+            color: #fff;
+        }
+</style>
+
+<div class="adidas-form-container">
+    <h2 class="adidas-title">ĐĂNG NHẬP</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger rounded-0 mb-4">@ViewBag.Error</div>
+        }
+
+        <label class="adidas-label">TÊN ĐĂNG NHẬP</label>
+        <input type="text" name="UserName" class="adidas-input" placeholder="Nhập tên tài khoản" required />
+
+        <label class="adidas-label">MẬT KHẨU</label>
+        <input type="password" name="Password" class="adidas-input" placeholder="Nhập mật khẩu" required />
+
+        <div class="text-end mb-3">
+            <a href="@Url.Action("Create", "Customers")" style="font-size:13px; text-decoration:underline; color:#000;">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="btn-adidas-submit">
+            ĐĂNG NHẬP <i class="fas fa-arrow-right"></i>
+        </button>
+    }
+
+    <div class="register-box">
+        <h4 style="font-family:'Oswald', sans-serif; font-weight:700; font-size:20px;">THAM GIA CLB ADIDAS</h4>
+        <p style="font-size:14px; color:#666;">Tích điểm, nhận quà và mua hàng nhanh chóng hơn.</p>
+        <a href="@Url.Action("Create", "Customers")" class="btn-outline-adidas">
+            ĐĂNG KÝ NGAY <i class="fas fa-arrow-right float-end mt-1"></i>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa hàng trực tuyến chính thức của adidas Việt Nam</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            transition: 0.2s;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* TOP BAR */
+        .top-black-bar {
+            background-color: #000;
+            color: #fff;
+            font-size: 11px;
+            text-align: center;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .slide-text {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+            .slide-text.active {
+                display: block;
+            }
+
+        @@keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* NAVBAR */
+        .navbar-adidas {
+            background: #fff;
+            height: 80px;
+            border-bottom: 1px solid #eee;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .adidas-logo {
+            width: 50px;
+            cursor: pointer;
+        }
+
+        .menu-center a {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+            .menu-center a:hover {
+                text-decoration: underline;
+                text-underline-offset: 5px;
+            }
+
+        .icons-right i {
+            font-size: 20px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            background: #f4f4f4;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+            .search-box input {
+                border: none;
+                background: transparent;
+                outline: none;
+                width: 150px;
+                font-size: 14px;
+            }
+
+            .search-box button {
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                padding: 0;
+            }
+
+        /* FOOTER & INFO */
+        .info-section-black {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .info-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .info-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ececec;
+        }
+
+            .info-content p {
+                margin-bottom: 20px;
+            }
+
+        .bottom-logo {
+            width: 40px;
+            filter: invert(1);
+            margin-top: 30px;
+        }
+
+        .member-banner {
+            background-color: #006553;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .member-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-right: 30px;
+            text-transform: uppercase;
+        }
+
+        .btn-member {
+            background: #fff;
+            color: #000;
+            padding: 15px 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+            .btn-member:after {
+                content: '→';
+                margin-left: 10px;
+                font-size: 20px;
+            }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+
+        .footer-col h5 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+            .footer-col ul li a {
+                color: #d3d3d3;
+                font-size: 13px;
+            }
+
+                .footer-col ul li a:hover {
+                    text-decoration: underline;
+                    color: #fff;
+                }
+
+        .bottom-copyright {
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+            .bottom-copyright span {
+                margin: 0 10px;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="top-black-bar" id="topBar">
+        <span class="slide-text active">GIAO HÀNG MIỄN PHÍ CHO THÀNH VIÊN CỦA ADICLUB</span>
+        <span class="slide-text">TRẢ HÀNG DỄ DÀNG VỚI CHÍNH SÁCH MỚI</span>
+        <i class="fas fa-chevron-down ms-2" style="font-size: 10px;"></i>
+    </div>
+
+    <nav class="navbar-adidas sticky-top">
+        <a href="@Url.Action("Index", "Home")">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" class="adidas-logo" alt="Adidas">
+        </a>
+
+        <div class="menu-center d-none d-md-block">
+            @Html.ActionLink("NAM", "Index", "Products", null, null)
+            @Html.ActionLink("NỮ", "Index", "Products", null, null)
+            @Html.ActionLink("TRẺ EM", "Index", "Products", null, null)
+            @Html.ActionLink("THỂ THAO", "Index", "Products", null, null)
+            @Html.ActionLink("CÁC NHÃN HIỆU", "Index", "Products", null, null)
+            <a href="#" class="text-danger fw-bold">OUTLET</a>
+            @Html.ActionLink("QUẢN LÝ ĐƠN", "Index", "Order", null, new { @style = "color:red;" })
+        </div>
+
+        <div class="icons-right d-flex align-items-center">
+            <form action="@Url.Action("Index", "Products")" method="get" class="search-box">
+                <input type="text" name="searchString" placeholder="Tìm kiếm">
+                <button type="submit">
+                    <i class="fa fa-search text-muted"></i>
+                </button>
+            </form>
+
+            @if (Session["IDCus"] != null)
+            {
+                <div class="d-flex flex-column align-items-end me-3">
+                    <span style="font-weight:bold; font-size:13px; text-transform:uppercase;">
+                        Xin chào, @(Session["NameCus"] != null ? Session["NameCus"] : Session["UserName"])
+                    </span>
+                    <a href="@Url.Action("Logout", "Customers")" style="font-size:11px; color:#666; text-decoration:underline;">
+                        Đăng xuất
+                    </a>
+                </div>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Customers")" style="font-size:14px; font-weight:bold; margin-right:15px; text-decoration:none; color:#000;">
+                    ĐĂNG NHẬP
+                </a>
+            }
+
+            <i class=""></i>
+
+            <a href="@Url.Action("Index", "Cart")" class="text-dark text-decoration-none position-relative ms-3">
+                <i class="fa fa-shopping-bag" style="font-size: 20px;"></i>
+                @{
+                    int count = 0;
+                    if (Session["Cart"] != null)
+                    {
+                        var list = Session["Cart"] as List<WEB.CartItem>;
+                        if (list != null) { count = list.Sum(x => x._shopping_quantity); }
+                    }
+                }
+                @if (count > 0)
+                {
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size:9px;">
+                        @count
+                    </span>
+                }
+            </a>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-0" style="min-height: 600px; background: #fff;">
+        @RenderBody()
+    </div>
+
+    <div class="info-section-black">
+        <h2 class="info-title">CỬA HÀNG THỂ THAO ADIDAS – HIỆU NĂNG, PHONG CÁCH & ĐỔI MỚI TỪ NĂM 1949</h2>
+        <div class="info-content">
+            <p>Thể thao nâng cao sức khoẻ. Giúp bạn luôn tĩnh tâm. Kết nối chúng ta. Thông qua thể thao, chúng ta có sức mạnh để thay đổi cuộc sống—bằng những câu chuyện về các vận động viên truyền cảm hứng, công nghệ đột phá và bằng cách giúp bạn đứng lên và vận động.</p>
+            <p>Tìm kiếm trang phục thể thao hiệu suất cao được ứng dụng công nghệ tiên tiến nhất để giúp bạn bứt phá giới hạn. Dù bạn là một runner, cầu thủ bóng rổ, cầu thủ bóng đá hay đơn giản chỉ là người yêu thích vận động, cửa hàng thể thao của chúng tôi chính là nơi dành cho bạn. Chúng tôi giúp bạn tập luyện chăm chỉ hơn, chạy nhanh hơn và tiến xa hơn với những sản phẩm luôn đồng hành cùng từng chuyển động và mục tiêu của bạn.</p>
+            <p>Khám phá cửa hàng trực tuyến của adidas để cập nhật những bộ sưu tập mới nhất, nơi công nghệ tiên tiến hòa quyện cùng phong cách. Cửa hàng thể thao adidas mang đến trang phục hiệu năng cao cho mọi cấp độ—dù bạn là vận động viên chuyên nghiệp, người yêu thể thao hay chỉ mới bắt đầu hành trình tập luyện. Với cửa hàng trực tuyến của chúng tôi, bạn có thể tiếp cận những trang bị mới nhất, được thiết kế để chuyển động, dù bạn ở bất kỳ đâu.</p>
+            <p>Cửa hàng thể thao adidas không chỉ là nơi mua sắm—đây còn là không gian dành cho những người sáng tạo muốn nâng tầm cuộc chơi và định nghĩa lại giới hạn của bản thân. Tại adidas, chúng tôi hợp tác với những tên tuổi hàng đầu trong ngành để cùng sáng tạo, đảm bảo từng món đồ không chỉ hỗ trợ vận động mà còn thể hiện cá tính và phong cách sống năng động. Dù môn thể thao của bạn là gì, cửa hàng thể thao adidas luôn sẵn sàng đồng hành, giúp bạn tiến từng bước vững chắc trên hành trình chinh phục đỉnh cao.</p>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" class="bottom-logo" alt="Adidas">
+    </div>
+
+    <div class="member-banner">
+        <div class="member-text">TRỞ THÀNH HỘI VIÊN & HƯỞNG ƯU ĐÃI 10%</div>
+        <button class="btn-member">ĐĂNG KÝ MIỄN PHÍ</button>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 footer-col">
+                    <h5>SẢN PHẨM</h5>
+                    <ul>
+                        <li><a href="#">Giày</a></li>
+                        <li><a href="#">Quần áo</a></li>
+                        <li><a href="#">Phụ kiện</a></li>
+                        <li><a href="#">Hàng Mới Về</a></li>
+                        <li><a href="#">Release Dates</a></li>
+                        <li><a href="#">Outlet</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-col">
+                    <h5>THỂ THAO</h5>
+                    <ul>
+                        <li><a href="#">Chạy</a></li>
+                        <li><a href="#">Đánh gôn</a></li>
+                        <li><a href="#">Gym & Training</a></li>
+                        <li><a href="#">Bóng đá</a></li>
+                        <li><a href="#">Bóng rổ</a></li>
+                        <li><a href="#">Quần vợt</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-col">
+                    <h5>BỘ SƯU TẬP</h5>
+                    <ul>
+                        <li><a href="#">Pharrell Williams</a></li>
+                        <li><a href="#">Ultra Boost</a></li>
+                        <li><a href="#">Pureboost</a></li>
+                        <li><a href="#">Predator</a></li>
+                        <li><a href="#">Superstar</a></li>
+                        <li><a href="#">Stan Smith</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-col">
+                    <h5>THÔNG TIN CÔNG TY</h5>
+                    <ul>
+                        <li><a href="#">Giới Thiệu Về Chúng Tôi</a></li>
+                        <li><a href="#">Cơ Hội Nghề Nghiệp</a></li>
+                        <li><a href="#">Tin tức</a></li>
+                        <li><a href="#">adidas stories</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-col">
+                    <h5>HỖ TRỢ</h5>
+                    <ul>
+                        <li><a href="#">Trợ Giúp</a></li>
+                        <li><a href="#">Công cụ tìm kiếm cửa hàng</a></li>
+                        <li><a href="#">Biểu Đồ Kích Cỡ</a></li>
+                        <li><a href="#">Thanh toán</a></li>
+                        <li><a href="#">Giao hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-col">
+                    <h5>THEO DÕI CHÚNG TÔI</h5>
+                    <div style="font-size: 24px;">
+                        <i class="fab fa-facebook me-3"></i>
+                        <i class="fab fa-instagram me-3"></i>
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-copyright">
+                <span>Cài đặt Cookie</span> |
+                <span>Chính sách Bảo mật</span> |
+                <span>Điều Khoản và Điều Kiện</span> |
+                <span>XUẤT BẢN BỞI</span> |
+                <span>© 2025 Công ty TNHH adidas Việt Nam</span>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var slides = document.querySelectorAll(".slide-text");
+            var currentIndex = 0;
+
+            function switchText() {
+                slides[currentIndex].classList.remove("active");
+                currentIndex = (currentIndex + 1) % slides.length;
+                slides[currentIndex].classList.add("active");
+            }
+
+            setInterval(switchText, 3000);
+        });
+    </script>
+</body>
+</html>

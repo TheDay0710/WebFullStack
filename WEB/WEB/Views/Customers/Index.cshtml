@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WEB.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .adidas-form-container {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 40px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+    }
+
+    .adidas-title {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 30px;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+    }
+
+    .p-adidas {
+        background-color: #000;
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: 2px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+        .p-adidas:hover {
+            background-color: #333;
+        }
+</style>
+<div class="adidas-form-container">
+    <h2 class="adidas-title">Tài khoản</h2>
+    <div class="flex-center">
+        <div class="box">
+            <p>
+                @Html.ActionLink("Tạo Tài Khoảng Mới", "Create", null, new { @class = "p-adidas" })
+            </p>
+
+            <p>
+                @Html.ActionLink("Đăng Nhập", "Login", null, new { @class = "p-adidas" })
+            </p>
+        </div>
+    </div>
+</div>
