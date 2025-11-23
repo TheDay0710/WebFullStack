@@ -127,6 +127,25 @@
             border-color: #000;
         }
 
+        /* CSS MỚI CHO SIZE */
+        .size-item.disabled {
+            background-color: #f5f5f5;
+            color: #ccc;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+            .size-item.disabled::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 10%;
+                width: 80%;
+                height: 1px;
+                background: #ccc;
+                transform: rotate(-45deg);
+            }
+
     /* Nút Mua & Tim */
     .actions-row {
         display: flex;
@@ -155,6 +174,16 @@
             background: #333;
             color: #fff;
         }
+
+        /* CSS MỚI CHO NÚT DISABLED */
+        .btn-add-cart:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+            .btn-add-cart:disabled:hover {
+                background-color: #ccc;
+            }
 
     .btn-wishlist {
         width: 54px;
@@ -187,6 +216,23 @@
     }
 </style>
 
+<!-- PHẦN 1: THÔNG BÁO -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
 <div class="container mt-3 mb-3">
     <span class="category-text">Trở lại</span>
     <span class="mx-2">|</span>
@@ -209,45 +255,64 @@
         <div class="col-md-5 product-sidebar">
             <div class="d-flex justify-content-between">
                 <span class="text-muted text-uppercase" style="font-size:13px;">Nam • Chạy</span>
-                <span style="font-size:13px; font-weight:bold; text-decoration:underline;">11 Đánh giá</span>
+                <span style="font-size:13px; font-weight:bold; text-decoration:underline;">@Model.NumOfReview Đánh giá</span>
             </div>
 
             <h1 class="product-title">@Model.NamePro</h1>
             <div class="product-price">@string.Format("{0:N0} ₫", Model.Price)</div>
 
             <div class="pop-alert">
-                <span><strong>Popularity Alert!</strong> Sản phẩm này được xem 414 lần trong 7 ngày qua.</span>
+                <span><strong>Popularity Alert!</strong> Sản phẩm này được xem @Model.ViewCount lần.</span>
             </div>
 
+            <!-- PHẦN 2: FORM CHỌN SIZE -->
             <div class="clearfix mt-4">
                 <span class="fw-bold text-uppercase" style="font-size:13px;">Kích cỡ</span>
                 <span class="size-guide">Hướng dẫn chọn kích cỡ</span>
             </div>
 
-            <div class="size-grid">
-                <div class="size-item">6 UK</div>
-                <div class="size-item">6.5 UK</div>
-                <div class="size-item active">7 UK</div>
-                <div class="size-item">7.5 UK</div>
-                <div class="size-item">8 UK</div>
-                <div class="size-item">8.5 UK</div>
-                <div class="size-item">9 UK</div>
-                <div class="size-item">9.5 UK</div>
-                <div class="size-item">10 UK</div>
-                <div class="size-item">10.5 UK</div>
-                <div class="size-item" style="opacity:0.5; background:#f5f5f5;">11 UK</div>
-                <div class="size-item">12 UK</div>
-            </div>
+            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+            {
+                @Html.Hidden("productId", Model.ProductID)
+                @Html.Hidden("selectedSize", "", new { id = "selectedSize" })
 
-            <div class="actions-row">
-                <a href="@Url.Action("AddToCart", "Cart", new { id = Model.ProductID })" class="btn-add-cart">
-                    THÊM VÀO GIỎ HÀNG
-                    <span>→</span>
-                </a>
-                <div class="btn-wishlist">
-                    LƯU
+                <div class="size-grid" id="sizeGrid">
+                    @if (Model.ProductSizes != null && Model.ProductSizes.Any())
+                    {
+                        foreach (var size in Model.ProductSizes.OrderBy(ps => ps.SizeName))
+                        {
+                            <div class="size-item @(size.Quantity == 0 ? "disabled" : "")"
+                                 data-size="@size.SizeName"
+                                 data-quantity="@size.Quantity"
+                                 onclick="selectSize('@size.SizeName', @size.Quantity)">
+                                @size.SizeName
+                                @if (size.Quantity == 0)
+                                {
+                                    <div style="font-size:10px; color:red;">HẾT HÀNG</div>
+                                }
+                                else if (size.Quantity < 5)
+                                {
+                                    <div style="font-size:10px; color:orange;">SẮP HẾT</div>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-muted">Đang cập nhật sizes...</div>
+                    }
                 </div>
-            </div>
+
+                <div class="actions-row">
+                    <button type="submit" class="btn-add-cart" id="addToCartBtn" disabled>
+                        THÊM VÀO GIỎ HÀNG
+                        <span>→</span>
+                    </button>
+                    <div class="btn-wishlist" onclick="addToWishlist()">
+                        LƯU
+                    </div>
+                </div>
+            }
 
             <div class="mt-4">
                 <div class="extra-info-item">
@@ -270,3 +335,71 @@
         </div>
     </div>
 </div>
+
+<!-- PHẦN 3: JAVASCRIPT -->
+@section Scripts {
+    <script>
+    let selectedSizeValue = '';
+
+    function selectSize(size, quantity) {
+        if (quantity <= 0) return;
+
+        // Remove active class from all sizes
+        document.querySelectorAll('.size-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Add active class to selected size
+        event.target.classList.add('active');
+
+        // Store selected size
+        selectedSizeValue = size;
+        document.getElementById('selectedSize').value = size;
+
+        // Enable add to cart button
+        document.getElementById('addToCartBtn').disabled = false;
+
+        // Update stock info (có thể hiển thị thông báo nếu cần)
+        console.log('Selected size:', size, 'Stock:', quantity);
+    }
+
+    // Form submission handling
+    document.querySelector('form').addEventListener('submit', function(e) {
+        if (!selectedSizeValue) {
+            e.preventDefault();
+            alert('Vui lòng chọn kích cỡ trước khi thêm vào giỏ hàng');
+            return false;
+        }
+    });
+
+    function addToWishlist() {
+        if (!selectedSizeValue) {
+            alert('Vui lòng chọn kích cỡ trước khi lưu sản phẩm');
+            return;
+        }
+
+        // Gọi API hoặc xử lý thêm vào wishlist ở đây
+        alert('Đã lưu sản phẩm "' + '@Model.NamePro' + '" với size ' + selectedSizeValue + ' vào danh sách yêu thích');
+
+        // Có thể gọi AJAX để lưu vào database
+        
+        $.post('@Url.Action("AddToWishlist", "Account")', {
+            productId: @Model.ProductID,
+            size: selectedSizeValue
+        }, function(response) {
+            if (response.success) {
+                alert('Đã lưu vào danh sách yêu thích!');
+            }
+        });
+       
+    }
+
+    // Xử lý nút gallery (tuỳ chọn)
+    document.querySelectorAll('.gallery-nav button').forEach((button, index) => {
+        button.addEventListener('click', function() {
+            // Logic chuyển ảnh có thể thêm ở đây
+            console.log('Gallery button clicked:', index);
+        });
+    });
+    </script>
+}

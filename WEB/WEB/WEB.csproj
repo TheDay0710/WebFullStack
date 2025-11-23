@@ -143,6 +143,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductSizesController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>DBADIDAS.tt</DependentUpon>
     </Compile>
@@ -285,6 +286,11 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\ProductSizes\Create.cshtml" />
+    <Content Include="Views\ProductSizes\Delete.cshtml" />
+    <Content Include="Views\ProductSizes\Details.cshtml" />
+    <Content Include="Views\ProductSizes\Edit.cshtml" />
+    <Content Include="Views\ProductSizes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

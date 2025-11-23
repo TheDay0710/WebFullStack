@@ -1,4 +1,4 @@
-﻿@using Web
+﻿@using WEB
 @{
     ViewBag.Title = "GIỎ HÀNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,6 +22,7 @@
         text-transform: uppercase;
         text-decoration: none;
         display: inline-block;
+        transition: 0.3s;
     }
 
         .btn-black:hover {
@@ -37,13 +38,57 @@
     }
 
     .qty-input {
-        width: 50px;
+        width: 60px;
         text-align: center;
         border: 1px solid #000;
         padding: 5px;
         font-weight: bold;
     }
+
+    /* CSS MỚI CHO SIZE BADGE */
+    .size-badge {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #000;
+        text-transform: uppercase;
+    }
+
+    .btn-outline-danger {
+        border: 1px solid #dc3545;
+        color: #dc3545;
+        background: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-outline-danger:hover {
+            background: #dc3545;
+            color: white;
+        }
 </style>
+
+<!-- THÊM PHẦN THÔNG BÁO -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
 
 <div class="container py-5" style="min-height: 600px;">
     <h2 class="adidas-font mb-4">GIỎ HÀNG CỦA BẠN</h2>
@@ -55,10 +100,11 @@
 
         <div class="row">
             <div class="col-lg-8">
-                <table class="table">
+                <table class="table table-hover">
                     <thead class="bg-light">
                         <tr>
                             <th>SẢN PHẨM</th>
+                            <th>SIZE</th> <!-- THÊM CỘT SIZE -->
                             <th>GIÁ</th>
                             <th>SỐ LƯỢNG</th>
                             <th>THÀNH TIỀN</th>
@@ -70,64 +116,214 @@
                         {
                             <tr>
                                 <td>
-                                    <div class="d-flex">
-                                        <img src="~/Content/images/@item._shopping_product.ImagePro" class="cart-img me-3">
+                                    <div class="d-flex align-items-center">
+                                        <img src="~/Content/images/@item._shopping_product.ImagePro" class="cart-img me-3" alt="@item._shopping_product.NamePro">
                                         <div>
-                                            <strong class="text-uppercase">@item._shopping_product.NamePro</strong><br>
+                                            <strong class="text-uppercase d-block mb-1">@item._shopping_product.NamePro</strong>
                                             <small class="text-muted">ID: @item._shopping_product.ProductID</small>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">@string.Format("{0:N0} ₫", item._shopping_product.Price)</td>
                                 <td class="align-middle">
-                                    @using (Html.BeginForm("UpdateCart", "Cart", new { id = item._shopping_product.ProductID }))
-                                    {
-                                        <input type="number" name="Quantity" value="@item._shopping_quantity" min="1" class="qty-input" onchange="this.form.submit()" />
-                                    }
+                                    <!-- HIỂN THỊ SIZE -->
+                                    <span class="size-badge">@item._shopping_size</span>
                                 </td>
                                 <td class="align-middle fw-bold">
+                                    @string.Format("{0:N0} ₫", item._shopping_product.Price)
+                                </td>
+                                <td class="align-middle">
+                                    <!-- CẬP NHẬT FORM UPDATE CART - THÊM THAM SỐ SIZE -->
+                                    @using (Html.BeginForm("UpdateCart", "Cart", new
+                                    {
+                                        id = item._shopping_product.ProductID,
+                                        size = item._shopping_size
+                                    }, FormMethod.Post))
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <input type="number"
+                                                   name="Quantity"
+                                                   value="@item._shopping_quantity"
+                                                   min="1"
+                                                   max="10"
+                                                   class="qty-input me-2"
+                                                   onchange="this.form.submit()" />
+                                            <small class="text-muted">⏎ Enter</small>
+                                        </div>
+                                    }
+                                </td>
+                                <td class="align-middle fw-bold text-primary">
                                     @string.Format("{0:N0} ₫", item._shopping_product.Price * item._shopping_quantity)
                                 </td>
                                 <td class="align-middle">
-                                    <a href="@Url.Action("RemoveCart", "Cart", new { id = item._shopping_product.ProductID })" class="text-danger fw-bold">X</a>
+                                    <!-- CẬP NHẬT LINK XÓA - THÊM THAM SỐ SIZE -->
+                                    <a href="@Url.Action("RemoveCart", "Cart", new {
+                                           id = item._shopping_product.ProductID,
+                                           size = item._shopping_size
+                                       })"
+                                       class="btn-outline-danger"
+                                       onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')"
+                                       title="Xóa sản phẩm">
+                                        ✕
+                                    </a>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+
+                <!-- NÚT TIẾP TỤC MUA SẮM -->
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Products")" class="text-decoration-none">
+                        ← Tiếp tục mua sắm
+                    </a>
+                </div>
             </div>
 
             <div class="col-lg-4">
-                <div class="border p-4">
-                    <h4 class="adidas-font mb-3">TÓM TẮT</h4>
+                <div class="border p-4 bg-light">
+                    <h4 class="adidas-font mb-3">TÓM TẮT ĐƠN HÀNG</h4>
+
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Tạm tính</span>
-                        <span>@string.Format("{0:N0} ₫", total)</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-4">
-                        <span>Giao hàng</span>
-                        <span>Miễn phí</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between mb-4 fw-bold fs-5">
-                        <span>TỔNG CỘNG</span>
-                        <span>@string.Format("{0:N0} ₫", total)</span>
+                        <span class="text-muted">Số lượng sản phẩm</span>
+                        <span class="fw-bold">@cart.Sum(item => item._shopping_quantity)</span>
                     </div>
 
-                    <a href="@Url.Action("Index", "Payment")" class="btn-black w-100 text-center">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Tạm tính</span>
+                        <span class="fw-bold">@string.Format("{0:N0} ₫", total)</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Phí vận chuyển</span>
+                        <span class="text-success fw-bold">Miễn phí</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between mb-4 fw-bold fs-5">
+                        <span>TỔNG CỘNG</span>
+                        <span class="text-primary">@string.Format("{0:N0} ₫", total)</span>
+                    </div>
+
+                    <!-- NÚT THANH TOÁN -->
+                    <a href="@Url.Action("Index", "Payment")" class="btn-black w-100 text-center py-3 mb-3">
                         THANH TOÁN NGAY <i class="fas fa-arrow-right ms-2"></i>
                     </a>
+
+                    <!-- THÔNG TIN BỔ SUNG -->
+                    <div class="text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Thanh toán an toàn & bảo mật
+                        </small>
+                    </div>
+                </div>
+
+                <!-- KHUYẾN MÃI & ƯU ĐÃI -->
+                <div class="border p-3 mt-3">
+                    <h6 class="adidas-font mb-2">ƯU ĐÃI ĐẶC BIỆT</h6>
+                    <ul class="small text-muted mb-0">
+                        <li>Miễn phí vận chuyển cho đơn từ 500.000₫</li>
+                        <li>Đổi trả trong 30 ngày</li>
+                        <li>Hỗ trợ 24/7</li>
+                    </ul>
                 </div>
             </div>
         </div>
     }
     else
     {
-        <div class="text-center mt-5">
-            <h4 class="adidas-font">GIỎ HÀNG TRỐNG</h4>
-            <p class="text-muted">Bạn chưa chọn sản phẩm nào.</p>
+        <div class="text-center mt-5 py-5">
+            <div class="mb-4">
+                <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                <h4 class="adidas-font text-muted">GIỎ HÀNG CỦA BẠN ĐANG TRỐNG</h4>
+            </div>
+            <p class="text-muted mb-4">Hãy khám phá các sản phẩm mới nhất và thêm vào giỏ hàng.</p>
 
-            <a href="@Url.Action("Index", "Products")" class="btn-black mt-3">MUA SẮM NGAY</a>
+            <a href="@Url.Action("Index", "Products")" class="btn-black px-5 py-3">
+                <i class="fas fa-bag-shopping me-2"></i> MUA SẮM NGAY
+            </a>
+
+            <!-- GỢI Ý SẢN PHẨM (CÓ THỂ THÊM SAU) -->
+            <div class="mt-5">
+                <h6 class="adidas-font mb-3">CÓ THỂ BẠN SẼ THÍCH</h6>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card border-0">
+                            <img src="~/Content/images/ps1.jpg" class="card-img-top" alt="Product">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">GIÀY NAM</h6>
+                                <p class="card-text text-muted">Từ 2.000.000₫</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0">
+                            <img src="~/Content/images/ps2.jpg" class="card-img-top" alt="Product">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">GIÀY NỮ</h6>
+                                <p class="card-text text-muted">Từ 1.800.000₫</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0">
+                            <img src="~/Content/images/ps3.jpg" class="card-img-top" alt="Product">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">PHỤ KIỆN</h6>
+                                <p class="card-text text-muted">Từ 500.000₫</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0">
+                            <img src="~/Content/images/ps4.jpg" class="card-img-top" alt="Product">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">SALE</h6>
+                                <p class="card-text text-danger">Giảm đến 50%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 </div>
+
+<!-- JAVASCRIPT XỬ LÝ -->
+@section Scripts {
+    <script>
+        // Xử lý khi số lượng thay đổi
+        document.querySelectorAll('.qty-input').forEach(input => {
+            input.addEventListener('change', function () {
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+                if (this.value > 10) {
+                    this.value = 10;
+                    alert('Số lượng tối đa cho mỗi sản phẩm là 10');
+                }
+            });
+        });
+
+        // Hiển thị loading khi submit form
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function () {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang cập nhật...';
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function () {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+}

@@ -10,7 +10,6 @@ namespace WEB.Controllers
     {
         DBADIDASEntities db = new DBADIDASEntities();
 
-
         public List<CartItem> GetCart()
         {
             List<CartItem> myCart = Session["Cart"] as List<CartItem>;
@@ -22,46 +21,74 @@ namespace WEB.Controllers
             return myCart;
         }
 
-
-        public ActionResult AddToCart(int id)
+        // PHƯƠNG THỨC MỚI - THÊM VÀO GIỎ HÀNG CÓ CHỌN SIZE
+        [HttpPost]
+        public ActionResult AddToCart(int productId, string selectedSize)
         {
-
-            List<CartItem> myCart = GetCart();
-
-
-            CartItem currentItem = myCart.FirstOrDefault(p => p._shopping_product.ProductID == id);
-
-            if (currentItem == null)
+            try
             {
-
-                Product product = db.Products.Find(id);
-                if (product != null)
+                if (string.IsNullOrEmpty(selectedSize))
                 {
-                    myCart.Add(new CartItem
-                    {
-                        _shopping_product = product,
-                        _shopping_quantity = 1
-                    });
+                    TempData["ErrorMessage"] = "Vui lòng chọn kích cỡ";
+                    return RedirectToAction("Details", "Products", new { id = productId });
                 }
+
+                // Kiểm tra size có tồn tại và còn hàng không
+                var productSize = db.ProductSizes
+                    .FirstOrDefault(ps => ps.ProductID == productId && ps.SizeName == selectedSize);
+
+                if (productSize == null)
+                {
+                    TempData["ErrorMessage"] = "Kích cỡ không tồn tại";
+                    return RedirectToAction("Details", "Products", new { id = productId });
+                }
+
+                if (productSize.Quantity <= 0)
+                {
+                    TempData["ErrorMessage"] = "Kích cỡ này đã hết hàng";
+                    return RedirectToAction("Details", "Products", new { id = productId });
+                }
+
+                List<CartItem> myCart = GetCart();
+
+                // Tìm sản phẩm cùng ID và cùng SIZE
+                CartItem currentItem = myCart.FirstOrDefault(p =>
+                    p._shopping_product.ProductID == productId &&
+                    p._shopping_size == selectedSize);
+
+                if (currentItem == null)
+                {
+                    Product product = db.Products.Find(productId);
+                    if (product != null)
+                    {
+                        myCart.Add(new CartItem
+                        {
+                            _shopping_product = product,
+                            _shopping_quantity = 1,
+                            _shopping_size = selectedSize // Lưu size vào giỏ hàng
+                        });
+                    }
+                }
+                else
+                {
+                    currentItem._shopping_quantity++;
+                }
+
+                Session["Cart"] = myCart;
+                TempData["SuccessMessage"] = "Đã thêm vào giỏ hàng!";
+
+                return RedirectToAction("Details", "Products", new { id = productId });
             }
-            else
+            catch (Exception ex)
             {
-
-                currentItem._shopping_quantity++;
+                TempData["ErrorMessage"] = "Có lỗi xảy ra: " + ex.Message;
+                return RedirectToAction("Details", "Products", new { id = productId });
             }
-
-
-            Session["Cart"] = myCart;
-
-
-            return RedirectToAction("Index");
         }
-
 
         public ActionResult Index()
         {
             List<CartItem> myCart = GetCart();
-
 
             if (myCart.Count > 0)
             {
@@ -75,11 +102,15 @@ namespace WEB.Controllers
             return View(myCart);
         }
 
-
-        public ActionResult UpdateCart(int id, FormCollection f)
+        // CẬP NHẬT PHƯƠNG THỨC UPDATE - THÊM THAM SỐ SIZE
+        [HttpPost]
+        public ActionResult UpdateCart(int id, string size, FormCollection f)
         {
             List<CartItem> myCart = GetCart();
-            CartItem currentItem = myCart.FirstOrDefault(p => p._shopping_product.ProductID == id);
+            // Tìm sản phẩm theo ID và SIZE
+            CartItem currentItem = myCart.FirstOrDefault(p =>
+                p._shopping_product.ProductID == id &&
+                p._shopping_size == size);
 
             if (currentItem != null)
             {
@@ -88,10 +119,14 @@ namespace WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult RemoveCart(int id)
+        // CẬP NHẬT PHƯƠNG THỨC XÓA - THÊM THAM SỐ SIZE
+        public ActionResult RemoveCart(int id, string size)
         {
             List<CartItem> myCart = GetCart();
-            CartItem currentItem = myCart.FirstOrDefault(p => p._shopping_product.ProductID == id);
+            // Tìm sản phẩm theo ID và SIZE
+            CartItem currentItem = myCart.FirstOrDefault(p =>
+                p._shopping_product.ProductID == id &&
+                p._shopping_size == size);
 
             if (currentItem != null)
             {

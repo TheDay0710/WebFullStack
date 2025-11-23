@@ -29,18 +29,28 @@ namespace WEB.Controllers
 
             return View(products.ToList());
         }
-      
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+
+            // SỬA: Include ProductSizes để lấy thông tin size
+            Product product = db.Products
+                .Include(p => p.ProductSizes) // THÊM DÒNG NÀY
+                .FirstOrDefault(p => p.ProductID == id);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
+            // Tăng view count (tuỳ chọn)
+            product.ViewCount++;
+            db.SaveChanges();
+
             return View(product);
         }
 
