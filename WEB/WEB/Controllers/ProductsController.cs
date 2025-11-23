@@ -14,7 +14,11 @@ namespace WEB.Controllers
     {
         private DBADIDASEntities db = new DBADIDASEntities();
 
-
+        public ActionResult SP()
+        {
+            var products = db.Products.Include(p => p.Category);
+            return View(products.ToList());
+        }
         public ActionResult Index(string searchString)
         {
 
@@ -64,7 +68,7 @@ namespace WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,NamePro,Type,CateID,Price,ImagePro,ViewCount,NumOfReview")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +100,7 @@ namespace WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,NamePro,Type,CateID,Price,ImagePro")] Product product)
         {
             if (ModelState.IsValid)
             {

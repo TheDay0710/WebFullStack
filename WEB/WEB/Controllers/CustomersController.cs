@@ -13,7 +13,10 @@ namespace WEB.Controllers
     public class CustomersController : Controller
     {
         private DBADIDASEntities db = new DBADIDASEntities();
-
+        public ActionResult Users()
+        {
+            return View(db.Customers.ToList());
+        }
         public ActionResult Login()
         {
             return View();

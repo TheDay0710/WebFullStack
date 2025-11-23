@@ -1,20 +1,166 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+﻿@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+
+h1, h2, h3, h4, h5, h6, .adidas-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    color: #000;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+a {
+    color: #000;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    a:hover {
+        color: #555;
+        text-decoration: none;
+    }
+
+
+.form-control, input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    border-radius: 0 !important;
+    border: 1px solid #767677;
+    padding: 12px 15px;
+    font-size: 15px;
+    color: #000;
+    box-shadow: none !important;
+}
+
+    .form-control:focus, input:focus {
+        border-color: #000;
+        outline: 0;
+        box-shadow: 0 0 0 1px #000 inset !important;
+    }
+
+
+.btn-black, .btn-dark {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 12px 25px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-black:hover, .btn-dark:hover {
+        background-color: #333;
+        border-color: #333;
+        color: #fff;
+    }
+
+
+.btn-outline-black {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 12px 25px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+    .btn-outline-black:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+
+.btn i, .btn-black i {
+    margin-left: 10px;
+}
+
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000;
+}
+
+    .table thead th {
+        border-bottom: 2px solid #000;
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-size: 14px;
+        background-color: #f9f9f9;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 15px;
+        border-top: 1px solid #eceff1;
+    }
+
+.section-padding {
+    padding: 60px 0;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .btn-black {
+        width: 100%;
+    }
 }
