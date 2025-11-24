@@ -253,15 +253,17 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" class="adidas-logo" alt="Adidas">
         </a>
 
-        <div class="menu-center d-none d-md-block">
-            @Html.ActionLink("NAM", "Index", "Products", null, null)
-            @Html.ActionLink("NỮ", "Index", "Products", null, null)
-            @Html.ActionLink("TRẺ EM", "Index", "Products", null, null)
-            @Html.ActionLink("THỂ THAO", "Index", "Products", null, null)
-            @Html.ActionLink("CÁC NHÃN HIỆU", "Index", "Products", null, null)
+     
+            @Html.ActionLink("NAM", "ViewAll", "Products",new { category = "Nam" }, null)
+            @Html.ActionLink("NỮ", "ViewAll", "Products", new { category = "Nữ" }, null)
+            @Html.ActionLink("Quần Áo", "ViewAll", "Products", new { category = "Quần Áo" }, null)
+            @Html.ActionLink("Sale", "ViewAll", "Products", null, null)
+            @Html.ActionLink("CÁC NHÃN HIỆU", "ViewAll", "Products", null, null)
             <a href="#" class="text-danger fw-bold">OUTLET</a>
             @Html.ActionLink("QUẢN LÝ ĐƠN", "Index", "Order", null, new { @style = "color:red;" })
-        </div>
+       
+
+
 
         <div class="icons-right d-flex align-items-center">
             <form action="@Url.Action("Index", "Products")" method="get" class="search-box">
@@ -289,7 +291,7 @@
                 </a>
             }
 
-    
+
 
             <a href="@Url.Action("Index", "Cart")" class="text-dark text-decoration-none position-relative ms-3">
                 <i class="fa fa-shopping-bag" style="font-size: 20px;"></i>
@@ -409,7 +411,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
+ 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var slides = document.querySelectorAll(".slide-text");
@@ -423,6 +425,34 @@
 
             setInterval(switchText, 3000);
         });
+
+    </script>
+    <script>
+    $(document).ready(function () {
+        // Xử lý khi click menu category
+        $('.category-link').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+
+            // Load sản phẩm category
+            $.get(url, function (data) {
+                $('.product-container').html(data);
+            });
+
+            // Thêm active state cho menu
+            $('.category-link').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        // Load sản phẩm mặc định khi trang load
+        loadDefaultProducts();
+
+        function loadDefaultProducts() {
+            $.get('@Url.Action("ViewAll", "Products")', function (data) {
+                $('.product-container').html(data);
+            });
+        }
+    });
     </script>
 </body>
 </html>

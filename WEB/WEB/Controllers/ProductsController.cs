@@ -21,7 +21,34 @@ namespace Web.Controllers
             var products = db.Products.Include(p => p.Category);
             return View(products.ToList());
         }
+        // Thêm action ViewAll với parameter category
+        public PartialViewResult ViewAll(string category = "")
+        {
+            var products = db.Products.Include(p => p.Category);
 
+            if (!string.IsNullOrEmpty(category))
+            {
+                switch (category.ToLower())
+                {
+                    case "Giày Nam":
+                        products = products.Where(p => p.Category.NameCate.Contains("Giày Nam") || p.Category.NameCate.Contains("Giày Nam"));
+                        break;
+                    case "Giày Nữ":
+                        products = products.Where(p => p.Category.NameCate.Contains("Giày Nữ") || p.Category.NameCate.Contains("Giày Nữ"));
+                        break;
+                    case "Quần Áo":
+                        products = products.Where(p => p.Category.NameCate.Contains("Quần Áo") || p.Category.NameCate.Contains("Quần Áo"));
+                        break;
+                    case "Sale":
+                        products = products.Where(p => p.Category.NameCate.Contains("Sale") || p.Category.NameCate.Contains("Sale"));
+                        break;
+                }
+            }
+
+            return PartialView(products.ToList());
+        }
+
+     
         public ActionResult Index(string searchString)
         {
             var products = db.Products.Include(p => p.Category);

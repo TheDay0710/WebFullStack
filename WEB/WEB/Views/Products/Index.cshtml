@@ -374,7 +374,12 @@
 </section>
 
 </div>
-
+<script>
+    // Load sản phẩm khi trang ready
+    $(document).ready(function () {
+        $('.product-container').load('@Url.Action("ViewAll", "Products")');
+    });
+</script>
 <script>
 
     function scrollList(elementId, amount) {
