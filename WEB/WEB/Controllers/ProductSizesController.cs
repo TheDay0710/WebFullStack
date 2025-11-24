@@ -12,7 +12,7 @@ namespace WEB.Controllers
 {
     public class ProductSizesController : Controller
     {
-        private DBADIDASEntities db = new DBADIDASEntities();
+        private DBADIDASEntities1 db = new DBADIDASEntities1();
 
         // GET: ProductSizes
         public ActionResult Index()

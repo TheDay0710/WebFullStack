@@ -13,10 +13,10 @@ namespace WEB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBADIDASEntities : DbContext
+    public partial class DBADIDASEntities1 : DbContext
     {
-        public DBADIDASEntities()
-            : base("name=DBADIDASEntities")
+        public DBADIDASEntities1()
+            : base("name=DBADIDASEntities1")
         {
         }
     

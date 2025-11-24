@@ -307,7 +307,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBADIDASEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DBADIDASEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AdminUsers" EntityType="Self.AdminUser" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
@@ -341,7 +341,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBADIDASModelStoreContainer" CdmEntityContainer="DBADIDASEntities">
+        <EntityContainerMapping StorageEntityContainer="DBADIDASModelStoreContainer" CdmEntityContainer="DBADIDASEntities1">
           <EntitySetMapping Name="AdminUsers">
             <EntityTypeMapping TypeName="DBADIDASModel.AdminUser">
               <MappingFragment StoreEntitySet="AdminUser">

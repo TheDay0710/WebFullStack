@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Web;
+using WEB;
 
-namespace WEB.Controllers
+namespace Web.Controllers
 {
     public class PaymentController : Controller
     {
-        DBADIDASEntities db = new DBADIDASEntities();
+        private DBADIDASEntities1 db = new DBADIDASEntities1();
+
         public ActionResult Index()
         {
-
+            // BẮT BUỘC ĐĂNG NHẬP
             if (Session["IDCus"] == null)
             {
-
                 return RedirectToAction("Login", "Customers");
             }
 
@@ -30,12 +31,10 @@ namespace WEB.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ProcessOrder(OrderPro order)
         {
-
             if (Session["IDCus"] == null)
             {
                 return RedirectToAction("Login", "Customers");
@@ -43,7 +42,6 @@ namespace WEB.Controllers
 
             if (ModelState.IsValid)
             {
-
                 order.IDCus = int.Parse(Session["IDCus"].ToString());
                 order.DateOrder = DateTime.Now;
 
@@ -61,11 +59,11 @@ namespace WEB.Controllers
                     db.OrderDetails.Add(detail);
                 }
                 db.SaveChanges();
+
                 Session["Cart"] = null;
 
                 return RedirectToAction("Success", new { id = order.ID });
             }
-
 
             if (Session["Cart"] != null)
             {
@@ -87,3 +85,4 @@ namespace WEB.Controllers
         }
     }
 }
+

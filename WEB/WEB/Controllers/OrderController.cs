@@ -12,7 +12,7 @@ namespace WEB.Controllers
 {
     public class OrderController : Controller
     {
-        private DBADIDASEntities db = new DBADIDASEntities();
+        private DBADIDASEntities1 db = new DBADIDASEntities1();
 
         public ActionResult Index()
         {

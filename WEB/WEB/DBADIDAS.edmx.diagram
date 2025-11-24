@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c20e7f81e3a5440795c6ff7184bbb95d" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="8f0752c5c54044bcaddf9db9902de558" Name="Diagram1">
         <EntityTypeShape EntityType="DBADIDASModel.AdminUser" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.Category" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.Customer" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.OrderDetail" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.OrderPro" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.Product" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBADIDASModel.ProductSize" Width="1.5" PointX="5.875" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBADIDASModel.ProductSize" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
         <AssociationConnector Association="DBADIDASModel.FK_Pro_Category" ManuallyRouted="false" />
         <AssociationConnector Association="DBADIDASModel.FK__OrderPro__IDCus__33D4B598" ManuallyRouted="false" />
         <AssociationConnector Association="DBADIDASModel.FK__OrderDeta__IDOrd__37A5467C" ManuallyRouted="false" />

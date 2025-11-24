@@ -1,10 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "LayoutAdmin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -17,18 +11,21 @@
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
         }
 
-        /* SIDEBAR (MENU TRÁI) */
+
         .sidebar {
             height: 100vh;
             width: 250px;
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #000; /* Màu đen Adidas */
+            background-color: #000;
             padding-top: 20px;
             color: #fff;
+            z-index: 1000;
         }
 
             .sidebar h3 {
@@ -38,6 +35,7 @@
                 margin-bottom: 30px;
                 font-family: 'Oswald', sans-serif;
                 letter-spacing: 2px;
+                font-size: 24px;
             }
 
             .sidebar a {
@@ -62,10 +60,11 @@
                     text-align: center;
                 }
 
-        /* CONTENT (NỘI DUNG PHẢI) */
+
         .main-content {
             margin-left: 250px;
             padding: 30px;
+            min-height: 100vh;
         }
 
         .admin-header {
@@ -76,6 +75,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -83,17 +83,17 @@
     <div class="sidebar">
         <h3>ADIDAS ADMIN</h3>
         <a href="@Url.Action("Index", "Admin")"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="@Url.Action("Index", "Products")"><i class="fas fa-box"></i> Quản lý Sản phẩm</a>
+        <a href="@Url.Action("SP", "Products")"><i class="fas fa-box"></i> Quản lý Sản phẩm</a>
         <a href="@Url.Action("Index", "Category")"><i class="fas fa-list"></i> Quản lý Danh mục</a>
         <a href="@Url.Action("Index", "Order")"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
-        <a href="@Url.Action("Index", "Customers")"><i class="fas fa-users"></i> Khách hàng</a>
+        <a href="@Url.Action("Users", "Customers")"><i class="fas fa-users"></i> Khách hàng</a>
         <hr style="border-color: #333;">
         <a href="@Url.Action("Logout", "Admin")" style="color: #ff6b6b;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
     </div>
 
     <div class="main-content">
         <div class="admin-header">
-            <h4 class="m-0">HỆ THỐNG QUẢN TRỊ</h4>
+            <h4 class="m-0" style="font-weight:bold; text-transform:uppercase;">HỆ THỐNG QUẢN TRỊ</h4>
             <div>
                 Xin chào, <strong>@Session["AdminUser"]</strong>
             </div>
@@ -109,4 +109,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-

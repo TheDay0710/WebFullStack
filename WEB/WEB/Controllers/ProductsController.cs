@@ -12,24 +12,22 @@ namespace WEB.Controllers
 {
     public class ProductsController : Controller
     {
-        private DBADIDASEntities db = new DBADIDASEntities();
+        private DBADIDASEntities1 db = new DBADIDASEntities1();
 
         public ActionResult SP()
         {
             var products = db.Products.Include(p => p.Category);
             return View(products.ToList());
         }
+
         public ActionResult Index(string searchString)
         {
-
             var products = db.Products.Include(p => p.Category);
-
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.NamePro.Contains(searchString));
             }
-
 
             return View(products.ToList());
         }
@@ -58,13 +56,11 @@ namespace WEB.Controllers
             return View(product);
         }
 
-
         public ActionResult Create()
         {
             ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate");
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -74,13 +70,12 @@ namespace WEB.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SP"); // SỬA TỪ "Index" THÀNH "SP"
             }
 
             ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate", product.CateID);
             return View(product);
         }
-
 
         public ActionResult Edit(int? id)
         {
@@ -97,7 +92,6 @@ namespace WEB.Controllers
             return View(product);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductID,NamePro,Type,CateID,Price,ImagePro")] Product product)
@@ -112,7 +106,6 @@ namespace WEB.Controllers
             return View(product);
         }
 
-
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,8 +119,8 @@ namespace WEB.Controllers
             }
             return View(product);
         }
-      
 
+        // SỬA PHƯƠNG THỨC NÀY: Đổi RedirectToAction("Index") thành RedirectToAction("SP")
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -135,7 +128,7 @@ namespace WEB.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("SP"); // SỬA TỪ "Index" THÀNH "SP"
         }
 
         protected override void Dispose(bool disposing)
