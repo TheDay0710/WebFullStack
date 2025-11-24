@@ -13,7 +13,7 @@ namespace Web.Controllers
 {
     public class CustomersController : Controller
     {
-        private DBADIDASEntities2 db = new DBADIDASEntities2();
+        private DBADIDASEntities3 db = new DBADIDASEntities3();
 
         // LOGIN
         public ActionResult Login()
@@ -102,7 +102,10 @@ namespace Web.Controllers
             return View(db.Customers.ToList());
         }
 
-
+        public ActionResult Users()
+        {
+            return View(db.Customers.ToList());
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing) db.Dispose();

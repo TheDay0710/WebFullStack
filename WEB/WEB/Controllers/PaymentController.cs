@@ -9,7 +9,7 @@ namespace Web.Controllers
 {
     public class PaymentController : Controller
     {
-        private DBADIDASEntities2 db = new DBADIDASEntities2();
+        private DBADIDASEntities3 db = new DBADIDASEntities3();
 
         public ActionResult Index()
         {

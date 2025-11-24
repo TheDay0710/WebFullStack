@@ -14,7 +14,7 @@ namespace Web.Controllers
     public class ProductsController : Controller
     {
         
-        private DBADIDASEntities2 db = new DBADIDASEntities2();
+        private DBADIDASEntities3 db = new DBADIDASEntities3();
 
         public ActionResult SP()
         {

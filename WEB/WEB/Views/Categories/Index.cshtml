@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
 <h2>Index</h2>
@@ -24,9 +24,9 @@
             @Html.DisplayFor(modelItem => item.NameCate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IDCate }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IDCate }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IDCate })
+            @Html.ActionLink("Edit", "Edit", new { id=item.CateID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CateID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CateID })
         </td>
     </tr>
 }

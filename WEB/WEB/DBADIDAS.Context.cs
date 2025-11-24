@@ -13,10 +13,10 @@ namespace WEB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBADIDASEntities2 : DbContext
+    public partial class DBADIDASEntities3 : DbContext
     {
-        public DBADIDASEntities2()
-            : base("name=DBADIDASEntities2")
+        public DBADIDASEntities3()
+            : base("name=DBADIDASEntities3")
         {
         }
     
@@ -32,6 +32,5 @@ namespace WEB
         public virtual DbSet<OrderPro> OrderProes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductSize> ProductSizes { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
