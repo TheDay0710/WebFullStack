@@ -6,13 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Web;
 using WEB;
 
-namespace WEB.Controllers
+namespace Web.Controllers
 {
     public class ProductsController : Controller
     {
-        private DBADIDASEntities1 db = new DBADIDASEntities1();
+        
+        private DBADIDASEntities2 db = new DBADIDASEntities2();
 
         public ActionResult SP()
         {
@@ -39,9 +41,8 @@ namespace WEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // SỬA: Include ProductSizes để lấy thông tin size
             Product product = db.Products
-                .Include(p => p.ProductSizes) // THÊM DÒNG NÀY
+                .Include(p => p.ProductSizes)
                 .FirstOrDefault(p => p.ProductID == id);
 
             if (product == null)
@@ -49,8 +50,7 @@ namespace WEB.Controllers
                 return HttpNotFound();
             }
 
-            // Tăng view count (tuỳ chọn)
-            product.ViewCount++;
+            product.ViewCount = (product.ViewCount ?? 0) + 1;
             db.SaveChanges();
 
             return View(product);
@@ -64,13 +64,16 @@ namespace WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,NamePro,Type,CateID,Price,ImagePro,ViewCount,NumOfReview")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro,ViewCount,NumOfReview")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.ViewCount = 0;
+                product.NumOfReview = 0;
+
                 db.Products.Add(product);
                 db.SaveChanges();
-                return RedirectToAction("SP"); // SỬA TỪ "Index" THÀNH "SP"
+                return RedirectToAction("SP");
             }
 
             ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate", product.CateID);
@@ -94,13 +97,13 @@ namespace WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,NamePro,Type,CateID,Price,ImagePro")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro")] Product product)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SP");
             }
             ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate", product.CateID);
             return View(product);
@@ -120,7 +123,6 @@ namespace WEB.Controllers
             return View(product);
         }
 
-        // SỬA PHƯƠNG THỨC NÀY: Đổi RedirectToAction("Index") thành RedirectToAction("SP")
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -128,7 +130,7 @@ namespace WEB.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
-            return RedirectToAction("SP"); // SỬA TỪ "Index" THÀNH "SP"
+            return RedirectToAction("SP");
         }
 
         protected override void Dispose(bool disposing)

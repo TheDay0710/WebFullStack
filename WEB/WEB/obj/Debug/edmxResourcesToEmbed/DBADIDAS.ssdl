@@ -69,7 +69,17 @@
     <Property Name="SizeName" Type="nvarchar" MaxLength="20" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
-  <Association Name="FK__OrderDeta__IDOrd__37A5467C">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__OrderDeta__IDOrd__4AB81AF0">
     <End Role="OrderPro" Type="Self.OrderPro" Multiplicity="0..1" />
     <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -81,7 +91,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderDeta__IDPro__36B12243">
+  <Association Name="FK__OrderDeta__IDPro__49C3F6B7">
     <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
     <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -93,7 +103,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderPro__IDCus__33D4B598">
+  <Association Name="FK__OrderPro__IDCus__46E78A0C">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
     <End Role="OrderPro" Type="Self.OrderPro" Multiplicity="*" />
     <ReferentialConstraint>
@@ -105,7 +115,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ProductSi__Produ__300424B4">
+  <Association Name="FK__ProductSi__Produ__4316F928">
     <End Role="Product" Type="Self.Product" Multiplicity="1" />
     <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
     <ReferentialConstraint>
@@ -137,19 +147,20 @@
     <EntitySet Name="OrderPro" EntityType="Self.OrderPro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__OrderDeta__IDOrd__37A5467C" Association="Self.FK__OrderDeta__IDOrd__37A5467C">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__OrderDeta__IDOrd__4AB81AF0" Association="Self.FK__OrderDeta__IDOrd__4AB81AF0">
       <End Role="OrderPro" EntitySet="OrderPro" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderDeta__IDPro__36B12243" Association="Self.FK__OrderDeta__IDPro__36B12243">
+    <AssociationSet Name="FK__OrderDeta__IDPro__49C3F6B7" Association="Self.FK__OrderDeta__IDPro__49C3F6B7">
       <End Role="Product" EntitySet="Product" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderPro__IDCus__33D4B598" Association="Self.FK__OrderPro__IDCus__33D4B598">
+    <AssociationSet Name="FK__OrderPro__IDCus__46E78A0C" Association="Self.FK__OrderPro__IDCus__46E78A0C">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="OrderPro" EntitySet="OrderPro" />
     </AssociationSet>
-    <AssociationSet Name="FK__ProductSi__Produ__300424B4" Association="Self.FK__ProductSi__Produ__300424B4">
+    <AssociationSet Name="FK__ProductSi__Produ__4316F928" Association="Self.FK__ProductSi__Produ__4316F928">
       <End Role="Product" EntitySet="Product" />
       <End Role="ProductSize" EntitySet="ProductSize" />
     </AssociationSet>
