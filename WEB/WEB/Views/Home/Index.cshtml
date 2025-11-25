@@ -1,33 +1,391 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<WEB.Product>
+@using System.Linq
+@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+<style>
+    /* --- 1. BANNER (ẢNH TĨNH) --- */
+    .banner {
+        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://i.ibb.co/Rp5pPvnQ/banner-giayadidas-1.jpg');
+        height: 75vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #fff;
+    }
+
+    .banner-content h2 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .banner-content p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .btn-banner {
+        display: inline-block;
+        background: #fff;
+        color: #000;
+        padding: 12px 30px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-family: 'Oswald', sans-serif;
+        letter-spacing: 1px;
+    }
+
+        .btn-banner:hover {
+            background: #000;
+            color: #fff;
+        }
+
+    /* --- 2. THANH TRƯỢT NGANG (HORIZONTAL SCROLL) --- */
+    .horizontal-scroll-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .scroll-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px;
+        padding: 20px 5px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+
+    .product-item, .kit-item {
+        flex: 0 0 280px;
+        width: 280px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .product-item:hover, .kit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+
+    .scroll-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+        .scroll-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+    .scroll-left {
+        left: -20px;
+    }
+
+    .scroll-right {
+        right: -20px;
+    }
+
+    /* --- 3. STYLE SẢN PHẨM --- */
+    .section-title {
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+
+
+    .product-image {
+        width: 100%;
+        height: 280px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            padding: 10px;
+        }
+
+    .product-info {
+        padding: 15px;
+        text-align: left;
+    }
+
+    .product-name {
+        font-size: 1rem;
+        margin: 5px 0;
+        height: 40px;
+        overflow: hidden;
+        font-weight: bold;
+    }
+
+    .product-price {
+        font-weight: bold;
+        color: #000;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .add-to-cart-link {
+        display: block;
+        text-align: center;
+        padding: 12px;
+        background: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 13px;
+        margin: 0 15px 15px 15px;
+    }
+
+        .add-to-cart-link:hover {
+            background: #333;
+            color: #fff;
+        }
+
+
+    .kit-item {
+        border: none;
+    }
+
+    .kit-image-wrapper {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 350px;
+        background-color: #f0f0f0;
+        overflow: hidden;
+    }
+
+        .kit-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .kit-image-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+    .kit-overlay-text {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        color: #000;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        text-shadow: none;
+    }
+
+    .kit-info {
+        padding: 15px 5px;
+    }
+
+    .buy-now {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
+
+
+    .product-grid-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+</style>
+
+<section class="banner">
+    <div class="banner-content">
+        <h2>BỘ SƯU TẬP MỚI NHẤT 2025</h2>
+        <p>Khám phá những thiết kế đột phá và công nghệ đỉnh cao.</p>
+        <a href="#all-products" class="btn-banner">BẮT ĐẦU MUA SẮM <i class="fas fa-arrow-right ms-2"></i></a>
+    </div>
+</section>
+
+<div class="container py-5">
+
+    <section class="featured-products mb-5">
+        <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
+
+        <div class="horizontal-scroll-wrapper">
+            <button class="scroll-btn scroll-left" onclick="scrollList('featured-list', -300)"><i class="fas fa-chevron-left"></i></button>
+            <button class="scroll-btn scroll-right" onclick="scrollList('featured-list', 300)"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="scroll-container" id="featured-list">
+                @foreach (var product in Model.Take(8))
+                {
+                    <div class="product-item">
+                        <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration:none; color:inherit;">
+                            <div class="product-image">
+                                <img src="~/Content/images/@product.ImagePro" alt="@product.NamePro" />
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">@product.NamePro</h3>
+                                <p class="product-price">@string.Format("{0:N0} ₫", product.Price)</p>
+                            </div>
+                        </a>
+
+                        <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" class="add-to-cart-link">
+                            THÊM VÀO GIỎ
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
-</main>
+    <section class="iconic-kits mb-5">
+        <h2 class="section-title">ICONIC KITS. TIMELESS LEGACY.</h2>
+
+        <div class="horizontal-scroll-wrapper">
+            <button class="scroll-btn scroll-left" onclick="scrollList('kit-list', -300)"><i class="fas fa-chevron-left"></i></button>
+            <button class="scroll-btn scroll-right" onclick="scrollList('kit-list', 300)"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="scroll-container" id="kit-list">
+                <div class="kit-item">
+                    <a href="#" class="kit-image-wrapper">
+                        <img src="~/Content/images/nv1.jpg" alt="Juventus" />
+                        <h3 class="kit-overlay-text">JUVENTUS</h3>
+                    </a>
+                    <div class="kit-info">
+                        <h4 style="font-weight:bold; font-size:14px;">Juventus 25/26 Third Kit</h4>
+                        <p style="font-size:13px; color:#666;">Năng lượng Bò Tót.</p>
+                        <a href="#" class="buy-now">MUA NGAY</a>
+                    </div>
+                </div>
+
+                <div class="kit-item">
+                    <a href="#" class="kit-image-wrapper">
+                        <img src="~/Content/images/nv2.jpg" alt="Real Madrid" />
+                        <h3 class="kit-overlay-text">REAL MADRID</h3>
+                    </a>
+                    <div class="kit-info">
+                        <h4 style="font-weight:bold; font-size:14px;">Real Madrid 25/26 Third Kit</h4>
+                        <p style="font-size:13px; color:#666;">Màu biểu tượng.</p>
+                        <a href="#" class="buy-now">MUA NGAY</a>
+                    </div>
+                </div>
+
+                <div class="kit-item">
+                    <a href="#" class="kit-image-wrapper">
+                        <img src="~/Content/images/nv3.jpg" alt="Man Utd" />
+                        <h3 class="kit-overlay-text">MAN UTD</h3>
+                    </a>
+                    <div class="kit-info">
+                        <h4 style="font-weight:bold; font-size:14px;">ManUtd 25/26 Third Kit</h4>
+                        <p style="font-size:13px; color:#666;">Biểu tượng cải biên.</p>
+                        <a href="#" class="buy-now">MUA NGAY</a>
+                    </div>
+                </div>
+
+                <div class="kit-item">
+                    <a href="#" class="kit-image-wrapper">
+                        <img src="~/Content/images/nv4.jpg" alt="Arsenal" />
+                        <h3 class="kit-overlay-text">ARSENAL</h3>
+                    </a>
+                    <div class="kit-info">
+                        <h4 style="font-weight:bold; font-size:14px;">Arsenal 25/26 Third Kit</h4>
+                        <p style="font-size:13px; color:#666;">Dư âm Highbury.</p>
+                        <a href="#" class="buy-now">MUA NGAY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products" id="all-products">
+        <h2 class="section-title">TẤT CẢ SẢN PHẨM</h2>
+
+        <div class="horizontal-scroll-wrapper">
+            <button class="scroll-btn scroll-left" onclick="scrollList('all-products-list', -300)"><i class="fas fa-chevron-left"></i></button>
+            <button class="scroll-btn scroll-right" onclick="scrollList('all-products-list', 300)"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="scroll-container" id="all-products-list">
+                @foreach (var product in Model)
+                {
+                    <div class="product-item">
+                        <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration:none; color:inherit;">
+                            <div class="product-image">
+                                <img src="~/Content/images/@product.ImagePro" alt="@product.NamePro" />
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">@product.NamePro</h3>
+                                <p class="product-price">@string.Format("{0:N0} ₫", product.Price)</p>
+                            </div>
+                        </a>
+                        <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" class="add-to-cart-link">
+                            THÊM VÀO GIỎ
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+</div>
+<script>
+    // Load sản phẩm khi trang ready
+    $(document).ready(function () {
+        $('.product-container').load('@Url.Action("ViewAll", "Products")');
+    });
+</script>
+<script>
+
+    function scrollList(elementId, amount) {
+        const container = document.getElementById(elementId);
+        if (container) {
+            container.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+    }
+</script>

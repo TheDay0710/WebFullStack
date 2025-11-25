@@ -13,7 +13,7 @@ namespace Web.Controllers
 {
     public class CustomersController : Controller
     {
-        private DBADIDASEntities3 db = new DBADIDASEntities3();
+        private DBADIDASEntities4 db = new DBADIDASEntities4();
 
         // LOGIN
         public ActionResult Login()
