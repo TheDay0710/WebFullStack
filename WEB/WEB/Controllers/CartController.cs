@@ -8,7 +8,7 @@ namespace WEB.Controllers
 {
     public class CartController : Controller
     {
-        DBADIDASEntities4 db = new DBADIDASEntities4();
+        DBADIDASEntities7 db = new DBADIDASEntities7();
 
         public List<CartItem> GetCart()
         {

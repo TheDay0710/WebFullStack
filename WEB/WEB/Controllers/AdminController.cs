@@ -8,7 +8,7 @@ namespace Web.Controllers
 {
     public class AdminController : Controller
     {
-        DBADIDASEntities4 db = new DBADIDASEntities4();
+        DBADIDASEntities7 db = new DBADIDASEntities7();
         // 1. DASHBOARD (Trang chủ Admin)
         public ActionResult Index()
         {

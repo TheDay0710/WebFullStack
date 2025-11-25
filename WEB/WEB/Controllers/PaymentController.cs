@@ -9,8 +9,7 @@ namespace Web.Controllers
 {
     public class PaymentController : Controller
     {
-        private DBADIDASEntities4 db = new DBADIDASEntities4();
-
+        private DBADIDASEntities7 db = new DBADIDASEntities7();
         // 1. TRANG THANH TOÁN (CHO PHÉP KHÁCH VÃNG LAI)
         public ActionResult Index()
         {

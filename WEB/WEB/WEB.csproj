@@ -185,9 +185,6 @@
       <DependentUpon>DBADIDAS.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>DBADIDAS.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />
@@ -214,7 +211,18 @@
     <Content Include="Content\images\nv4.jpg" />
     <Content Include="Content\images\nền.jpg" />
     <Content Include="Content\images\ps1.jpg" />
+    <Content Include="Content\images\ps10.jpg" />
+    <Content Include="Content\images\ps11.jpg" />
+    <Content Include="Content\images\ps12.jpg" />
+    <Content Include="Content\images\ps13.jpg" />
+    <Content Include="Content\images\ps14.jpg" />
+    <Content Include="Content\images\ps15.jpg" />
+    <Content Include="Content\images\ps16.jpg" />
+    <Content Include="Content\images\ps17.jpg" />
+    <Content Include="Content\images\ps18.jpg" />
+    <Content Include="Content\images\ps19.jpg" />
     <Content Include="Content\images\ps2.jpg" />
+    <Content Include="Content\images\ps20.jpg" />
     <Content Include="Content\images\ps3.jpg" />
     <Content Include="Content\images\ps4.jpg" />
     <Content Include="Content\images\ps5.jpg" />

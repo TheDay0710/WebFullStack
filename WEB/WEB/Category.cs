@@ -20,7 +20,7 @@ namespace WEB
             this.Products = new HashSet<Product>();
         }
     
-        public int IDCate { get; set; }
+        public int CateID { get; set; }
         public string NameCate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

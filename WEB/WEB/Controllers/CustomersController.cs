@@ -13,9 +13,57 @@ namespace Web.Controllers
 {
     public class CustomersController : Controller
     {
-        private DBADIDASEntities4 db = new DBADIDASEntities4();
+        private DBADIDASEntities7 db = new DBADIDASEntities7();
 
         // LOGIN
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        // DELETE - FIXED: Changed Product to Customer
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            // FIX: Changed from Product to Customer and using correct DB set
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
+        // DELETE CONFIRMATION (POST)
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                Customer customer = db.Customers.Find(id);
+                if (customer == null)
+                {
+                    return HttpNotFound();
+                }
+
+                db.Customers.Remove(customer);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Customer deleted successfully.";
+                return RedirectToAction("Index", "Admin");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the customer.";
+                return RedirectToAction("Delete", new { id = id });
+            }
+        }
+
         public ActionResult Login()
         {
             return View();
@@ -35,7 +83,7 @@ namespace Web.Controllers
                     Session["NameCus"] = user.NameCus;
                     Session["UserName"] = user.UserName;
 
-                    // Nếu có giỏ hàng thì sang thanh toán, không thì về trang chủ
+                    // If cart exists, go to payment; otherwise, go to home
                     if (Session["Cart"] != null)
                     {
                         return RedirectToAction("Index", "Payment");
@@ -96,7 +144,6 @@ namespace Web.Controllers
             return View(customer);
         }
 
-
         public ActionResult Index()
         {
             return View(db.Customers.ToList());
@@ -106,6 +153,37 @@ namespace Web.Controllers
         {
             return View(db.Customers.ToList());
         }
+
+        // EDIT CUSTOMER - ADDED MISSING METHOD
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,UserName,Password")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Customer updated successfully.";
+                return RedirectToAction("Index");
+            }
+            return View(customer);
+        }
+
+        // DETAILS - ADDED MISSING METHOD
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing) db.Dispose();
