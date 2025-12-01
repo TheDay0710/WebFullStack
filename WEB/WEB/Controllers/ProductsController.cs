@@ -14,7 +14,7 @@ namespace Web.Controllers
     public class ProductsController : Controller
     {
 
-        private DBADIDASEntities7 db = new DBADIDASEntities7();
+        private DBADIDASEntities8 db = new DBADIDASEntities8();
 
         public ActionResult SP()
         {
@@ -85,13 +85,13 @@ namespace Web.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate");
+            ViewBag.CateID = new SelectList(db.Categories, "CateID", "NameCate");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro,ViewCount,NumOfReview")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,Type,NamePro,DecriptionPro,CateID,Price,ImagePro,ViewCount,NumOfReview")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace Web.Controllers
                 return RedirectToAction("SP");
             }
 
-            ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate", product.CateID);
+            ViewBag.CateID = new SelectList(db.Categories, "CateID", "NameCate", product.CateID);
             return View(product);
         }
 
@@ -118,13 +118,13 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CateID = new SelectList(db.Categories, "IDCate", "NameCate", product.CateID);
+            ViewBag.CateID = new SelectList(db.Categories, "CateID", "NameCate", product.CateID);
             return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,CateID,Price,ImagePro")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,Type,ViewCount,NumOfReview,CateID,Price,ImagePro")] Product product)
         {
             if (ModelState.IsValid)
             {

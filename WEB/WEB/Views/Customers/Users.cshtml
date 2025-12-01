@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -46,11 +44,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IDCus }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IDCus }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IDCus })
-            </td>
+          
         </tr>
     }
 

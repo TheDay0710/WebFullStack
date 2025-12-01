@@ -69,7 +69,7 @@
     <Property Name="SizeName" Type="nvarchar" MaxLength="20" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
-  <Association Name="FK__OrderDeta__IDOrd__37A5467C">
+  <Association Name="FK__OrderDeta__IDOrd__49C3F6B7">
     <End Role="OrderPro" Type="Self.OrderPro" Multiplicity="0..1" />
     <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -81,7 +81,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderDeta__IDPro__36B12243">
+  <Association Name="FK__OrderDeta__IDPro__48CFD27E">
     <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
     <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -93,7 +93,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__OrderPro__IDCus__33D4B598">
+  <Association Name="FK__OrderPro__IDCus__45F365D3">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
     <End Role="OrderPro" Type="Self.OrderPro" Multiplicity="*" />
     <ReferentialConstraint>
@@ -105,7 +105,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ProductSi__Produ__300424B4">
+  <Association Name="FK__ProductSi__Produ__4222D4EF">
     <End Role="Product" Type="Self.Product" Multiplicity="1" />
     <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
     <ReferentialConstraint>
@@ -137,19 +137,19 @@
     <EntitySet Name="OrderPro" EntityType="Self.OrderPro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__OrderDeta__IDOrd__37A5467C" Association="Self.FK__OrderDeta__IDOrd__37A5467C">
+    <AssociationSet Name="FK__OrderDeta__IDOrd__49C3F6B7" Association="Self.FK__OrderDeta__IDOrd__49C3F6B7">
       <End Role="OrderPro" EntitySet="OrderPro" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderDeta__IDPro__36B12243" Association="Self.FK__OrderDeta__IDPro__36B12243">
+    <AssociationSet Name="FK__OrderDeta__IDPro__48CFD27E" Association="Self.FK__OrderDeta__IDPro__48CFD27E">
       <End Role="Product" EntitySet="Product" />
       <End Role="OrderDetail" EntitySet="OrderDetail" />
     </AssociationSet>
-    <AssociationSet Name="FK__OrderPro__IDCus__33D4B598" Association="Self.FK__OrderPro__IDCus__33D4B598">
+    <AssociationSet Name="FK__OrderPro__IDCus__45F365D3" Association="Self.FK__OrderPro__IDCus__45F365D3">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="OrderPro" EntitySet="OrderPro" />
     </AssociationSet>
-    <AssociationSet Name="FK__ProductSi__Produ__300424B4" Association="Self.FK__ProductSi__Produ__300424B4">
+    <AssociationSet Name="FK__ProductSi__Produ__4222D4EF" Association="Self.FK__ProductSi__Produ__4222D4EF">
       <End Role="Product" EntitySet="Product" />
       <End Role="ProductSize" EntitySet="ProductSize" />
     </AssociationSet>

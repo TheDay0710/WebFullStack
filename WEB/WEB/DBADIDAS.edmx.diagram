@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce38eac203bb47a0804bff191ea6f2d3" Name="Diagram1">
+      <Diagram DiagramId="922a943ab3244a7281723a2c182cd918" Name="Diagram1">
         <EntityTypeShape EntityType="DBADIDASModel.AdminUser" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.Category" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBADIDASModel.Customer" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBADIDASModel.Customer" Width="1.5" PointX="9.375" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.OrderDetail" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBADIDASModel.OrderPro" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBADIDASModel.OrderPro" Width="1.5" PointX="7.375" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DBADIDASModel.Product" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBADIDASModel.ProductSize" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBADIDASModel.ProductSize" Width="1.5" PointX="1" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="DBADIDASModel.FK_Pro_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="DBADIDASModel.FK__OrderPro__IDCus__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="DBADIDASModel.FK__OrderDeta__IDOrd__37A5467C" ManuallyRouted="false" />
-        <AssociationConnector Association="DBADIDASModel.FK__OrderDeta__IDPro__36B12243" ManuallyRouted="false" />
-        <AssociationConnector Association="DBADIDASModel.FK__ProductSi__Produ__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="DBADIDASModel.FK__OrderPro__IDCus__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="DBADIDASModel.FK__OrderDeta__IDOrd__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="DBADIDASModel.FK__OrderDeta__IDPro__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="DBADIDASModel.FK__ProductSi__Produ__4222D4EF" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

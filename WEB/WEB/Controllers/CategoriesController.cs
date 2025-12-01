@@ -12,7 +12,7 @@ namespace WEB.Controllers
 {
     public class CategoriesController : Controller
     {
-        private DBADIDASEntities7 db = new DBADIDASEntities7();
+        private DBADIDASEntities8 db = new DBADIDASEntities8();
 
         // GET: Categories
         public ActionResult Index()

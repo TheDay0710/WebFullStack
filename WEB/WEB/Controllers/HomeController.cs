@@ -12,7 +12,7 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
 
-        private DBADIDASEntities7 db = new DBADIDASEntities7();
+        private DBADIDASEntities8 db = new DBADIDASEntities8();
 
 
         public ActionResult Index(string searchString)
