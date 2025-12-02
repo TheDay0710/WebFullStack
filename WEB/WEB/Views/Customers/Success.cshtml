@@ -1,0 +1,22 @@
+﻿@model WEB.Customer
+@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container text-center py-5" style="min-height: 500px;">
+
+    <h1 style="font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;">XIN CHÀO!</h1>
+
+
+    @if (Model != null)
+    {
+        <div class="mt-4 p-4" style="border: 1px solid #000; max-width: 500px; margin: 0 auto; text-align: left;">
+            <p class="mb-2"><strong>TÊN:</strong> #@Model.Customer</p>
+
+        </div>
+    }
+
+    <a href="@Url.Action("Index", "Products")" class="btn btn-dark mt-5" style="border-radius: 0; padding: 15px 40px; font-weight: bold; font-family: 'Oswald', sans-serif; letter-spacing: 1px; text-decoration:none;">
+        BẮT ĐẦU MUA SẮM <i class="fas fa-arrow-right ms-2"></i>
+    </a>
+</div>

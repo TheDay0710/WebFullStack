@@ -109,21 +109,22 @@
         }
 
         <label class="adidas-label">TÊN ĐĂNG NHẬP</label>
-        <input type="text" name="UserName" class="adidas-input" placeholder="Nhập tên tài khoản" required  maxlength="40"/>
+        <input type="text" name="UserName" class="adidas-input" placeholder="Nhập tên tài khoản" required maxlength="40" />
 
         <label class="adidas-label">MẬT KHẨU</label>
-        <input type="password" name="Password" class="adidas-input" placeholder="Nhập mật khẩu" required maxlength="30"/>
+        <input type="password" name="Password" class="adidas-input" placeholder="Nhập mật khẩu" required maxlength="30" />
 
         <div class="text-end mb-3">
             <a href="@Url.Action("Create", "Customers")" style="font-size:13px; text-decoration:underline; color:#000;">Quên mật khẩu?</a>
         </div>
 
-        <button type="button" class="btn-adidas-submit" onclick="location.href='@Url.Action("Index", "Products")'">
+        <button type="submit" class="btn-adidas-submit">
             ĐĂNG NHẬP <i class="fas fa-arrow-right"></i>
         </button>
 
+
     }
-  
+
     <div class="register-box">
         <h4 style="font-family:'Oswald', sans-serif; font-weight:700; font-size:20px;">THAM GIA CLB ADIDAS</h4>
         <p style="font-size:14px; color:#666;">Tích điểm, nhận quà và mua hàng nhanh chóng hơn.</p>

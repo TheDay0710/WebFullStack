@@ -15,20 +15,20 @@ namespace Web.Controllers
     {
         private DBADIDASEntities8 db = new DBADIDASEntities8();
 
-        // LOGIN
+      
         public ActionResult Edit()
         {
             return View();
         }
 
-        // DELETE - FIXED: Changed Product to Customer
+       
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // FIX: Changed from Product to Customer and using correct DB set
+      
             Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
@@ -37,7 +37,7 @@ namespace Web.Controllers
             return View(customer);
         }
      
-        // DELETE CONFIRMATION (POST)
+    
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -98,14 +98,14 @@ namespace Web.Controllers
             return View();
         }
 
-        // LOGOUT
+     
         public ActionResult Logout()
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
-        // REGISTER
+  
         public ActionResult Create()
         {
             return View();
@@ -154,7 +154,6 @@ namespace Web.Controllers
             return View(db.Customers.ToList());
         }
 
-        // EDIT CUSTOMER - ADDED MISSING METHOD
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,UserName,Password")] Customer customer)
@@ -169,7 +168,7 @@ namespace Web.Controllers
             return View(customer);
         }
 
-        // DETAILS - ADDED MISSING METHOD
+      
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -188,6 +187,16 @@ namespace Web.Controllers
         {
             if (disposing) db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Success(int? id)
+        {
+            if (id.HasValue)
+            {
+                var customer = db.Customers.Find(id);
+                return View(customer);
+            }
+            return View();
         }
     }
 }

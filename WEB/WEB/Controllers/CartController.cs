@@ -21,7 +21,7 @@ namespace WEB.Controllers
             return myCart;
         }
 
-        // PHƯƠNG THỨC MỚI - THÊM VÀO GIỎ HÀNG CÓ CHỌN SIZE
+        
         [HttpPost]
         public ActionResult AddToCart(int productId, string selectedSize)
         {
@@ -33,7 +33,6 @@ namespace WEB.Controllers
                     return RedirectToAction("Details", "Products", new { id = productId });
                 }
 
-                // Kiểm tra size có tồn tại và còn hàng không
                 var productSize = db.ProductSizes
                     .FirstOrDefault(ps => ps.ProductID == productId && ps.SizeName == selectedSize);
 
@@ -51,7 +50,7 @@ namespace WEB.Controllers
 
                 List<CartItem> myCart = GetCart();
 
-                // Tìm sản phẩm cùng ID và cùng SIZE
+                
                 CartItem currentItem = myCart.FirstOrDefault(p =>
                     p._shopping_product.ProductID == productId &&
                     p._shopping_size == selectedSize);
@@ -65,7 +64,7 @@ namespace WEB.Controllers
                         {
                             _shopping_product = product,
                             _shopping_quantity = 1,
-                            _shopping_size = selectedSize // Lưu size vào giỏ hàng
+                            _shopping_size = selectedSize 
                         });
                     }
                 }
@@ -102,12 +101,11 @@ namespace WEB.Controllers
             return View(myCart);
         }
 
-        // CẬP NHẬT PHƯƠNG THỨC UPDATE - THÊM THAM SỐ SIZE
         [HttpPost]
         public ActionResult UpdateCart(int id, string size, FormCollection f)
         {
             List<CartItem> myCart = GetCart();
-            // Tìm sản phẩm theo ID và SIZE
+   
             CartItem currentItem = myCart.FirstOrDefault(p =>
                 p._shopping_product.ProductID == id &&
                 p._shopping_size == size);
@@ -119,11 +117,11 @@ namespace WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        // CẬP NHẬT PHƯƠNG THỨC XÓA - THÊM THAM SỐ SIZE
+
         public ActionResult RemoveCart(int id, string size)
         {
             List<CartItem> myCart = GetCart();
-            // Tìm sản phẩm theo ID và SIZE
+    
             CartItem currentItem = myCart.FirstOrDefault(p =>
                 p._shopping_product.ProductID == id &&
                 p._shopping_size == size);

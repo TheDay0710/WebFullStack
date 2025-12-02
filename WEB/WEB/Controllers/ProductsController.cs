@@ -95,17 +95,31 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.ViewCount = 0;
-                product.NumOfReview = 0;
+               
+                string productNameTrimmed = (product.NamePro ?? string.Empty).Trim().ToLower();
 
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("SP");
+               
+                bool isDuplicate = db.Products.Any(p => p.NamePro.Trim().ToLower() == productNameTrimmed);
+
+                if (isDuplicate)
+                {
+                    ModelState.AddModelError("NamePro", "Tên sản phẩm đã tồn tại. Vui lòng nhập tên khác.");
+                }
+                else
+                {
+                    product.ViewCount = 0;
+                    product.NumOfReview = 0;
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                    return RedirectToAction("SP");
+                }
             }
 
+           
             ViewBag.CateID = new SelectList(db.Categories, "CateID", "NameCate", product.CateID);
             return View(product);
         }
+
 
         public ActionResult Edit(int? id)
         {

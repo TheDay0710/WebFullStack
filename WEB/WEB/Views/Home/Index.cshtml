@@ -7,7 +7,7 @@
 }
 
 <style>
-    /* --- 1. BANNER (ẢNH TĨNH) --- */
+  
     .banner {
         background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://i.ibb.co/Rp5pPvnQ/banner-giayadidas-1.jpg');
         height: 75vh;
@@ -56,7 +56,7 @@
             color: #fff;
         }
 
-    /* --- 2. THANH TRƯỢT NGANG (HORIZONTAL SCROLL) --- */
+  
     .horizontal-scroll-wrapper {
         position: relative;
         width: 100%;
@@ -124,7 +124,7 @@
         right: -20px;
     }
 
-    /* --- 3. STYLE SẢN PHẨM --- */
+  
     .section-title {
         font-family: 'Oswald', sans-serif;
         text-transform: uppercase;
@@ -375,7 +375,7 @@
 
 </div>
 <script>
-    // Load sản phẩm khi trang ready
+    
     $(document).ready(function () {
         $('.product-container').load('@Url.Action("ViewAll", "Products")');
     });
