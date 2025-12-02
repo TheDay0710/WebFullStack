@@ -109,10 +109,10 @@
         }
 
         <label class="adidas-label">TÊN ĐĂNG NHẬP</label>
-        <input type="text" name="UserName" class="adidas-input" placeholder="Nhập tên tài khoản" required />
+        <input type="text" name="UserName" class="adidas-input" placeholder="Nhập tên tài khoản" required  maxlength="40"/>
 
         <label class="adidas-label">MẬT KHẨU</label>
-        <input type="password" name="Password" class="adidas-input" placeholder="Nhập mật khẩu" required />
+        <input type="password" name="Password" class="adidas-input" placeholder="Nhập mật khẩu" required maxlength="30"/>
 
         <div class="text-end mb-3">
             <a href="@Url.Action("Create", "Customers")" style="font-size:13px; text-decoration:underline; color:#000;">Quên mật khẩu?</a>

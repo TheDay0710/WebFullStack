@@ -94,24 +94,50 @@
         }
 
         <label class="adidas-label">HỌ VÀ TÊN *</label>
-        @Html.EditorFor(model => model.NameCus, new { htmlAttributes = new { @class = "adidas-input", @required = "required" } })
+        @Html.EditorFor(model => model.NameCus, new
+        {
+            htmlAttributes = new
+            {
+                @class = "adidas-input",
+                @required = "required",
+                @maxlength = "40"  // Giới hạn 100 ký tự
+            }
+        })
 
         <label class="adidas-label">SỐ ĐIỆN THOẠI</label>
-        @Html.EditorFor(model => model.PhoneCus, new { htmlAttributes = new { @class = "adidas-input" } })
+        @Html.EditorFor(model => model.PhoneCus, new
+        {
+            htmlAttributes = new
+            {
+                @class = "adidas-input",
+                @maxlength = "10"  // Giới hạn 15 ký tự cho số điện thoại
+            }
+        })
 
         <label class="adidas-label">TÊN ĐĂNG NHẬP *</label>
-        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "adidas-input", @required = "required", @placeholder = "Viết liền không dấu" } })
+        @Html.EditorFor(model => model.UserName, new
+        {
+            htmlAttributes = new
+            {
+                @class = "adidas-input",
+                @required = "required",
+                @placeholder = "Viết liền không dấu",
+                @maxlength = "40"  // Giới hạn 50 ký tự
+            }
+        })
         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 
         <label class="adidas-label">MẬT KHẨU *</label>
-        <input type="password" name="Password" class="adidas-input" placeholder="Ít nhất 6 ký tự" required />
+        <input type="password" name="Password" class="adidas-input"
+               placeholder="Ít nhất 6 ký tự"
+               required
+               maxlength="20" /> <!-- Giới hạn 50 ký cho mật khẩu -->
         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
         <button type="submit" class="btn-adidas-submit">
             TẠO TÀI KHOẢN <i class="fas fa-arrow-right"></i>
         </button>
     }
-
     <div class="text-center">
         <a href="@Url.Action("Login", "Customers")" class="login-link">BẠN ĐÃ CÓ TÀI KHOẢN? ĐĂNG NHẬP</a>
     </div>

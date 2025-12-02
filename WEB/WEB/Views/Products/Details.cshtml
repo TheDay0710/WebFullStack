@@ -245,10 +245,6 @@
             <div class="product-gallery">
                 <img src="~/Content/images/@Model.ImagePro" alt="@Model.NamePro" />
 
-                <div class="gallery-nav">
-                    <button>&lt;</button>
-                    <button>&gt;</button>
-                </div>
             </div>
         </div>
 
@@ -304,15 +300,12 @@
                 </div>
 
                 <div class="actions-row">
-                    <button  type="submit" class="btn-add-cart" id="addToCartBtn" disabled>
+                    <button onclick="location.href='@Url.Action("Index", "Cart")'" type="submit" class="btn-add-cart" id="addToCartBtn" disabled>
                         THÊM VÀO GIỎ HÀNG
-                        <span>→</span>
-                        
+                                             
                     </button>
-                    
-                    <div class="btn-wishlist" onclick="addToWishlist()">
-                        LƯU
-                    </div>
+                   
+                  
                 </div>
             }
 

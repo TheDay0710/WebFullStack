@@ -103,33 +103,52 @@
         <div class="col-lg-7 pe-lg-5">
             <h2 class="checkout-title">THÔNG TIN GIAO HÀNG</h2>
 
-            @using (Html.BeginForm("ProcessOrder", "Payment", FormMethod.Post))
+            @using (Html.BeginForm("ProcessOrder", "Payment", FormMethod.Post, new { id = "orderForm" }))
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-group">
                     <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Họ và tên *</label>
-                    <input type="text" name="NameCus" class="adidas-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+                    <input type="text" name="NameCus" class="adidas-input" placeholder="Ví dụ: Nguyễn Văn A"
+                           required
+                           maxlength="40"
+                         >
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Số điện thoại *</label>
-                            <input type="text" name="PhoneCus" class="adidas-input" placeholder="0909 xxx xxx" required>
+                            <input type="tel" name="PhoneCus" class="adidas-input" placeholder="09xx xxx xxx"
+                                   required
+                                   maxlength="12"
+                                   minlength="12"
+                                   pattern="^(0[3|5|7|8|9])+([0-9]{8})$"
+                                   oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10)" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Email</label>
-                            <input type="email" name="EmailCus" class="adidas-input" placeholder="email@example.com">
+                            <input type="email" name="EmailCus" class="adidas-input" placeholder="email@example.com"
+                                   maxlength="50">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="fw-bold mb-2 text-uppercase" style="font-size:12px">Địa chỉ nhận hàng *</label>
-                    @Html.EditorFor(model => model.AddressDeliverry, new { htmlAttributes = new { @class = "adidas-input", @placeholder = "Số nhà, Tên đường, Phường/Xã...", @required = "required" } })
+                    @Html.EditorFor(model => model.AddressDeliverry, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "adidas-input",
+                            @placeholder = "Số nhà, Tên đường, Phường/Xã...",
+                            @required = "required",
+                            @maxlength = "200",
+                            @minlength = "10"
+                        }
+                    })
                 </div>
 
                 <div class="mt-4">
@@ -144,7 +163,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-place-order">
+                <button type="submit" class="btn-place-order" onclick="return validateForm()">
                     ĐẶT HÀNG NGAY <i class="fas fa-arrow-right"></i>
                 </button>
 

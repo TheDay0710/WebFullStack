@@ -36,7 +36,7 @@ namespace Web.Controllers
             }
             return View(customer);
         }
-
+     
         // DELETE CONFIRMATION (POST)
         [HttpPost]
         [ActionName("Delete")]
